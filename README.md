@@ -62,7 +62,7 @@ Due to the nature of the approach, the generated questions start with a wh-word 
 **Dataset:** <https://research.fb.com/downloads/babi/>\
 **Year of Publication:** 2016\
 **Size:** 687,343\
-**Data Collection:** Hill et al. construct a reading comprehension dataset from 108 children's books. An example consists of context, query, answer candidates and the actual answer. The context consists of 20 consecutive sentences. A single word is removed from the 21st sentence such that the sentence forms the query and the removed word forms the answer. The answer candidates consist of 9 words that appear within the 21 sentences and have the same type as the answer (named entity, common noun, verb, preposition) plus the actual answer.
+**Data Collection:** Hill et al. construct a reading comprehension dataset from 108 children's books. An example consists of context, query, answer candidates and the actual answer. The context consists of 20 consecutive sentences. A single word is removed from the 21st sentence such that the sentence forms the query and the removed word forms the answer. The answer candidates consist of 9 words that appear within the 21 sentences and have the same type as the answer (named entity, common noun, verb, preposition) plus the actual answer. \
 **Examples:**
 
     1 With almost everything else to make them happy , they wanted one thing : they had no children .
@@ -266,18 +266,18 @@ Due to the nature of the approach, the generated questions start with a wh-word 
 ## Question Generation Systems
 
 #### Good Question! Statistical Ranking for Question Generation
-*Heilman and Smith* \
-**PDF:** <https://www.aclweb.org/anthology/N10-1086.pdf> \
-**Code:** <http://www.cs.cmu.edu/~ark/mheilman/questions/> \
-**Year of Publication:** 2010 \
-**Approach:** Heilman and Smith generate questions from sentences using a set of hand-crafted syntactic transformation rules. They use an *overgenerate and rank* approach where they first generate as many questions as possible and then rank them according to their quality using a logistic regression model. \
+*Heilman and Smith*\
+**PDF:** <https://www.aclweb.org/anthology/N10-1086.pdf>\
+**Code:** <http://www.cs.cmu.edu/~ark/mheilman/questions/>\
+**Year of Publication:** 2010\
+**Approach:** Heilman and Smith generate questions from sentences using a set of hand-crafted syntactic transformation rules. They use an *overgenerate and rank* approach where they first generate as many questions as possible and then rank them according to their quality using a logistic regression model.\
 **Examples:**
 
 
 #### Generating Natural Language Question-Answer Pairs from a KnowledgeGraph Using a RNN Based Question Generation Model
-*Indurthi et al.* \
-**PDF:** <https://www.aclweb.org/anthology/E17-1036.pdf> \
-**Code:** \
+*Indurthi et al.*\
+**PDF:** <https://www.aclweb.org/anthology/E17-1036.pdf>\
+**Code:**\
 **Year of Publication:** 2017\
 **Approach:** Indurthi et al. create keyword sets from Freebase facts (subject - predicate - object triples) by enriching the triples with the types of subject and object (e.g. *"Barack Obama"*-> *"person"*, *"Google"*->*"organization"*) and the predicate parent (e.g. *"CEO"*->*"designation"*). They use an encoder-decoder architecture based on Recurrent Neural Networks with Long Short Term Memory units to generate questions from subsets of these keyword sets.\
 **Examples:**
@@ -289,14 +289,84 @@ Due to the nature of the approach, the generated questions start with a wh-word 
     what is the ioc code for france ?   fr
 
 
-#### Neural Question Generation from Text: A Preliminary Study 
-*Zhou et al.* \
-**PDF:** <https://arxiv.org/pdf/1704.01792.pdf>\
-**Code:** <https://github.com/magic282/NQG> \
+#### Learning to Ask: Neural Question Generation for Reading Comprehension
+*Du et al.*\
+**PDF:** <https://arxiv.org/pdf/1705.00106.pdf>\
+**Code:** <https://github.com/xinyadu/nqg>\
 **Year of Publication:** 2017\
-**Approach:** Zhou et al. present a neural encoder-decoder model to generate questions from sentences. They use a bidirectional-GRU-based encoder and an attention-based decoder.\
+**Approach:** Du et al. generate questions from given sentences (and in a second model for given paragraphs) using an RNN encoder-decoder architecture. Their encoder is based on a bidirectional LSTM which takes word embeddings (300 dimensional pre-trained GloVe embeddings) as input. The decoder is based on an LSTM network and an attention mechanism. They deal with OoV words in the output by inserting for a predicted token UNK at time step *t* the input token with the highest attention score. The system is evaluated over the SQuAD dataset and compared to several baselines as well as Heilman and Smith's system. Additionally, they conduct a human evaluation where 100 random questions are rated in terms of naturalness and difficulty. Their system significantly outperforms the state-of-the-art system by Heilman and Smith.\
 **Examples:**
 
-    "question": "in what year did genghis khan begin a retaliatoryattack on the tanguts ?", "sentence": "n 1226, immediately after returning from the west,  genghis  khan  began  a  retaliatory  attack  on  thetanguts ."
-    "question": "what did manning suffer in his left foot ?", "sentence": "n week 10 , manning suffered a partial tear of theplantar fasciitisin his left foot ."
-    "question": "who designed the lombardi trophy ?", "sentence": "like  the  lombardi  trophy  ,  the  “  50  ”  will  be  de-signed by tiffany & co. ."
+    "question": "what is one of the largest city centers in the uk ?", "sentence": "the largest of these is the eldon square shopping centre , one of the largest city centre shopping complexes in the uk ."
+    "question": "how long ago did the paleoproterozoic exhibit ?", "sentence": "free oxygen first appeared in significant quantities during the paleoproterozoic eon -lrb- between 3.0 and 2.3 billion years ago -rrb- ."
+    "question": "what is one of the first objections of the immune system to infection ?", "sentence": "inflammation is one of the first responses of the immune system to infection ."
+    "question": "what are the most successful agricultural production regions in africa ?", "sentence": "tea , coffee , sisal , pyrethrum , corn , and wheat are grown in the fertile highlands , one of the most successful agricultural production regions in Africa ."
+    "question": "when did income inequality fall in the us ?", "sentence": "as an example , income inequality did fall in the united states during its high school movement from 1910 to 1940 and thereafter ."
+
+
+#### Neural Question Generation from Text: A Preliminary Study
+*Zhou et al.*\
+**PDF:** <https://arxiv.org/pdf/1704.01792.pdf>\
+**Code:** <https://github.com/magic282/NQG>\
+**Year of Publication:** 2017\
+**Approach:** Zhou et al. present a neural encoder-decoder model to generate questions from sentences. They use a bidirectional-GRU-based encoder and an attention-based decoder. The encoder takes as input a concatenation of a token's word embedding, answer position information as BIO tag, word case, POS and NER tag. They use a copy mechanism to copy rare and unknown words from the input sentence to the output sequence. The proposed system is evaluated over the SQuAD dataset. Additionally, Zhou et al. perform a human evaluation over a subset of the generated questions.\
+**Examples:**
+
+    "question": "in what year did genghis khan begin a retaliatoryattack on the tanguts ?", "sentence": "in 1226, immediately after returning from the west, genghis khan began a retaliatory attack on the tanguts ."
+    "question": "what did manning suffer in his left foot ?", "sentence": "in week 10 , manning suffered a partial tear of the plantar fasciitis in his left foot ."
+    "question": "who designed the lombardi trophy ?", "sentence": "like the lombardi trophy , the “ 50 ” will be designed by tiffany & co. ."
+
+
+#### Machine comprehension by text-to-text neural question generation
+*Yuan et al.* \
+**PDF:** <https://arxiv.org/pdf/1705.02012.pdf>\
+**Code:** <https://github.com/bloomsburyai/question-generation> (unofficial TensorFlow implementation)\
+**Year of Publication:** 2017\
+**Approach:** Yuan et al. generate questions from documents using a combination of supervised and reinforcement learning. They use a standard LSTM/attention-based encoder-decoder architecture and enhance it with techniques from reinforcement learning. During training, they use policy gradient optimization to maximize 1) a language model based score for fluency and 2) the performance of a pre-trained QA system on the generated questions. The input to the encoder are word embeddings combined with a binary feature that indicates whether a token belongs to the answer phrase. They evaluate their system over the SQuAD dataset.\
+**Examples:**
+
+    "question": "what language did the grainger market architecture belong to?"
+    "question": "what is southern california known for?"
+    "question": "what did the confucian scholars believe were attracted to the medical schools?"
+    "question": "what is an example of a theory that can cause polynomial-timesolutions to be useful?"
+
+
+#### Paragraph-level Neural Question Generation with Maxout Pointer and Gated Self-attention Networks
+*Zhao et al.* \
+**PDF:** <https://www.aclweb.org/anthology/D18-1424.pdf>\
+**Code:** <https://github.com/seanie12/neural-question-generation> (unofficial PyTorch implementation)\
+**Year of Publication:** 2018\
+**Approach:** Zhao et al. introduce an encoder-decoder architecture that effectively leverages paragraph-level inputs for generating questions from documents. The model uses a gated self-attention encoder and a Maxout Pointer mechanism in the decoder to copy words from the input to the output sequence. The encoder consists of a bidirectional LSTM with a self-attention mechanism. It takes word embeddings as input (pre-trained GloVe vectors) concatenated with a feature that indicates whether a token belongs to the answer phrase. The decoder consists of another LSTM over which an attention mechanism is applied. They propose the Maxout Pointer mechanism to copy words from the input to the generated output. Decoder output scores and copy scores from the Maxout Pointer mechanism are concatenated, softmax is applied over the vector and probabilities pointing to the same words are summed up to get the final token probability. Zhao et al. evaluate their system over SQuAD and the MS MARCO dataset. The reported scores beat the scores reported by Du et al., Zhou et al. and Song et al. and makes their system state of the art.\
+**Examples:**
+
+    "question": "what competition did thomas davis think he would play in ?", "paragraph": "carolina suffered a major setback when thomas davis , an 11-year veteran who had already overcome three acl tears in his career , went down with a broken arm in the nfc championship game .despite this , he insisted he would still find a way to play in the super bowl. [...]"
+    "quesiton": "how much money did walt wanted to invest in 1953?", "paragraph": "walt disney and his brother roy contacted goldenson at the end of 1953 for abc to agree to finance part of the disneyland project in exchange for producing a television program for the network .walt wanted abc to invest $500,000 and accrued a guarantee of $4.5 million in additional loans , a third of the budget intended for the park . [...]"
+    "question": "what type of protest did percy shelley write ?", "paragraph": "following the peterloo massacre of 1819 , poet percy shelley wrote the political poem the mask of anarchy later that year , that begins with the images of what he thought to be the unjust forms of authority of his time and then imagines the stirrings of a new form of social action . it is perhaps the first modern [ vague ] statement of the principle of nonviolent protest . [...]"
+    "question": "when was the victoria and albert museum founded ?", "paragraph": "the victoria and albert museum ( often abbreviated as the v & a ) , london , is the world ’s largest museum of decorative arts and design , housing a permanent collection of over 4.5 million objects. it was founded in 1852 and named after queen victoria and prince albert. [...]"
+
+
+#### Capturing Greater Context for Question Generation
+*Tuan et al.*\
+**PDF:** <https://arxiv.org/pdf/1910.10274.pdf>\
+**Code:** -\
+**Year of Publication:** 2019\
+**Approach:** Tuan et al. propose an encoder-decoder architecture that uses a multi-stage attention mechanism to identify tokens at document-level that are closely related to the answer. Their encoder takes two inputs: the document word embeddings and the answer word embeddings (using 300 dimensional pre-trained GloVe embeddings). Both are fed to a bidirectional LSTM layer. The output is passed through 2 stages of attention. In the resulting context representation, the word representation at the position of the answer is masked with a masking vector. This ensures that the system knows the position of the answer and generates questions that are coherent with the answer without including parts of the answer in the question. Tuan et al. evaluate their system on three datasets (SQuAD, MS MARCO, NewsQA) and additionally conduct a human evaluation using the same settings as Du et al.. They achieve results that beat previous state-of-the-art systems over all three datasets and achieve higher results than Du et al. in the human evaluation.\
+**Examples:**
+
+    "question": "when was the abc motion pictures dissolved?", "document": "In 1968, abc took advantage of new fcc ownership regulations that allowed broadcasting companies to own a maximum of seven radio stations nationwide in order to purchase houston radio stations kxyz and kxyz-fm for $1 million in shares and $1.5 million in bonds. that year, roone arledge was named president of abc sports; the company also founded abc pictures, a film production company which released its first picture that year, the ralph nelson-directed charly. it was renamed abc motion pictures in 1979. this unit was dissolved in 1985. [...]"
+    "question": "what does lack of education lead directly to?", "document": "an important factor in the creation of inequality is variation in individuals' access to education. education, especially in an area where there is a high demand for workers, creates high wages for those with this education, however, increases in education first increase and then decrease growth as well as income inequality. as a result, those who are unable to afford an education, or choose not to pursue optional education, generally receive much lower wages. the justification for this is that a lack of education leads directly to lower incomes, and thus lower aggregate savings and investment. [...]"
+    "question": "when was the appearance of the bible in french language?", "document": "the appearance of the bible in french language was important to the spread of the protestant movement and development of the reformed church in france. the country had a long history of struggles with the papacy by the time the protestant reformation finally arrived. around 1294, a french version of the scriptures was prepared by the roman catholic priest, guyard de moulin."
+
+
+#### Asking Questions the Human Way: Scalable Question-Answer Generation from Text Corpus
+*Liu et al.*\
+**PDF:** <https://arxiv.org/pdf/2002.00748.pdf>\
+**Code:** <https://github.com/bangliu/ACS-QG>\
+**Year of Publication:** 2020\
+**Approach:** Liu et al. propose a 3-step question generation system to generate questions given a plain input document. In a first step, an answer, a clue (contained in the question to constrain the question context) and a question style ("*which*", "*why*", "*yes/no*", ...) is extracted from a text passage using syntactic parsing and chunking. In a second step, they train two models on the extracted information. The first model is a GRU-based encoder-decoder model with an attention and a copy mechanism. The second model is a fine-tuned version of the GPT2-small model. The input to both models is a concatenation of the word embeddings of the input sentence (300 dimensional pre-trained GloVe embeddings, trainable) and their NER and POS tag embeddings, a binary indicator whether the word is a content word and binary features to indicate whether it is part of the answer or the clue. In a third step, they use a BERT-based QA model to filter out low-quality question-answer pairs. They evaluate their system over SQuAD where they drastically outperform state-of-the-art approaches. They also conduct a human evaluation over their two models and additionally evaluate them by training a BERT-based QA model on the generated questions where both models perform acceptably but worse than a system trained purely on SQuAD.\
+**Examples:**
+
+    "question": "What is the New York Amsterdam News known for?", "answer": "one of the leading African American weekly newspapers in the United States", "sentence": "The New York Amsterdam News, based in Harlem, is one of the leading African American weekly newspapers in the United States."
+    "question": "What is one of the leading African American weekly newspapers in the US?", "answer": "The New York Amsterdam News", "sentence": "The New York Amsterdam News, based in Harlem, is one of the leading African American weekly newspapers in the United States."
+    "question": "What area of medicine is Manhattan known for training?", "answer": "the life sciences", "sentence": "Manhattan is a world center for training and education in medicine and the life sciences."
+    "question": "Which city is a world center for education and training in medicine?", "answer": "Manhattan", "sentence": "Manhattan is a world center for training and education in medicine and the life sciences."
