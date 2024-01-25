@@ -4,6 +4,24 @@ Datasets are sorted by year of publication.
 
 ## Question Datasets
 
+### Overview
+- [WebQuestions](#webquestions) (5,810 questions; 2013)
+- [SimpleQuestions](#simplequestions) (108,422 questions; 2015)
+- [CNN/DailyMail Corpus](#cnndailymail-corpus) (~1M questions; 2015)
+- [Children's Book Test](#childrens-book-test-cbt) (687,343 questions; 2016)
+- [30M Factoid Question-Answer Corpus](#30m-factoid-question-answer-corpus) (30M questions; 2016)
+- [GraphQuestions](#graphquestions) (5,166 questions; 2016)
+- [TriviaQA](#triviaqa) (~95,000 questions; 2017)
+- [LC-QuAD](#lc-quad) (5,000 questions; 2017)
+- [SQuAD](#squad) (107,785/151,054 questions; 2016/2018)
+- [ComplexWebQuestions](#complexwebquestions) (34,689 questions; 2018)
+- [MS MARCO](#ms-marco) (1,010,916 questions; 2018)
+- [FreebaseQA](#freebaseqa) (28,348 questions; 2019)
+- [ComQA](#comqa) (11,214 questions; 2019)
+- [Natural Questions](#natural-questions) (323,045 questions; 2019)
+- [Compositional Freebase Questions](#compositional-freebase-questions-cfq) (239,357 questions; 2020)
+
+
 #### WebQuestions
 *Berant et al.* \
 **PDF:** <https://www.aclweb.org/anthology/D13-1160.pdf> \
