@@ -24,6 +24,7 @@ Datasets are sorted by year of publication.
 - [ComQA](#comqa) (11,214 questions; 2019)
 - [Natural Questions](#natural-questions) (323,045 questions; 2019)
 - [Compositional Freebase Questions](#compositional-freebase-questions-cfq) (239,357 questions; 2020)
+- [AdversarialQA](#adversarialqa) (36,000 questions; 2020)
 
 
 #### WebQuestions
@@ -348,6 +349,28 @@ Due to the nature of the approach, the generated questions start with a wh-word 
     "question": "Were O Brother, Where Art Thou? and A Day's Pleasure written by, produced by, directed by, and edited by a film director's sibling", "expectedResponse": "No", ...
     "question": "Did Traitor's executive producer influence Patton Oswalt and Patrice O'Neal, influence Funny or Die's founder and employee, and marry Bernadette Peters", "expectedResponse": "No", ...
     "question": "What German founder of Institute for Social Research was influenced by Bertolt Brecht and influenced by Immanuel Kant", "expectedResponse": "Theodor W. Adorno", ...
+
+
+#### AdversarialQA
+*Bartolo et al.* \
+**PDF:** <https://arxiv.org/pdf/2002.00293.pdf>\
+**Dataset:** <https://adversarialqa.github.io/>\
+**Year of Publication:** 2020\
+**Size:** 36,000\
+**Data Collection:** A crowd worker is given a text passage and asked to generate a question about the paragraph
+ and to mark an answer within the paragraph. The paragraph and the question are then given to a model which predicts
+ an answer to the question. A word-overlap score between the human answer and the model answer is computed to determine
+ whether the model answered correctly. If the score is lower than a certain threshold, the question is kept. Bartolo et
+ al. use three different models for this process (which get progressively stronger): BiDAF, BERT and RoBERTa, all of
+ which are trained on SQuAD. Based on these three models, they create three different datasets with 12,000 questions
+ each (10,000 training, 1,000 valudation and 1,000 test examples).\
+**Examples:**
+
+    [{"title": "Kenya", "paragraphs": [{"context": "The African Great Lakes region, which Kenya is a part of, has been inhabited by humans since the Lower Paleolithic period. By the first millennium AD, the Bantu expansion had reached the area from West-Central Africa. The borders of the modern state consequently comprise the crossroads of the Niger-Congo, Nilo-Saharan and Afroasiatic areas of the continent, representing most major ethnolinguistic groups found in Africa. Bantu and Nilotic populations together constitute around 97% of the nation's residents. European and Arab presence in coastal Mombasa dates to the Early Modern period; European exploration of the interior began in the 19th century. The British Empire established the East Africa Protectorate in 1895, which starting in 1920 gave way to the Kenya Colony. Kenya obtained independence in December 1963. Following a referendum in August 2010 and adoption of a new constitution, Kenya is now divided into 47 semi-autonomous counties, governed by elected governors.", "qas": [
+    {"question": "when has people evidently existed in Kenya?", "answers": [{"answer_start": 87,"text": "since the Lower Paleolithic period"}], ...},
+    {"question": "what happened 115 years prior to kenya having a ruling which allows splitting the land and electing leaders for the lands?", "answers": [{"answer_start": 656, "text": "The British Empire established the East Africa Protectorate"}], ...},
+    {"question": "what happened 47 years before kenya created a ruling which allows splitting the land and electing leaders for the lands?", "answers": [{"answer_start": 778, "text": "Kenya obtained independence"}], ...},
+    {"question": "what happened 68 years before Kenya achieved freedom from colonization?", "answers": [{"answer_start": 656,"text": "The British Empire established the East Africa Protectorate in 1895"}], ...}]}
 
 
 ## Smaller QA datasets
